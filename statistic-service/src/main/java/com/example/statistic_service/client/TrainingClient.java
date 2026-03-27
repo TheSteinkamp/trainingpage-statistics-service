@@ -11,4 +11,7 @@ import java.util.List;
 public interface TrainingClient {
     @GetMapping("/training/user/{id}")
     List<Training> getTrainings(@PathVariable int id);
+
+    @GetMapping("/training/all")
+    List<Training> getAllTrainings();
 }
