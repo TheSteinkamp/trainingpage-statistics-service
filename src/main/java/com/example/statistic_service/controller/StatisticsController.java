@@ -1,52 +1,51 @@
 package com.example.statistic_service.controller;
 
-import com.example.statistic_service.client.TrainingClient;
-import com.example.statistic_service.client.UserClient;
 import com.example.statistic_service.model.Statistics;
 import com.example.statistic_service.model.Training;
-import com.example.statistic_service.model.User;
 import com.example.statistic_service.service.StatisticsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/statistic")
 public class StatisticsController {
 
-    private final TrainingClient trainingClient;
-    private final UserClient userClient;
     private final StatisticsService statisticsService;
 
-    public StatisticsController(StatisticsService statisticsService, TrainingClient trainingClient, UserClient userClient) {
+    public StatisticsController(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
-        this.trainingClient = trainingClient;
-        this.userClient = userClient;
     }
 
-    @GetMapping("{id}")
-    public List<Training> getTrainings(@PathVariable int id) {
-        return trainingClient.getTrainings(id);
+    @GetMapping("/stats")
+    public Statistics getTrainingsPerUser(@RequestParam Long id) {
+        return statisticsService.getStats(id);
     }
 
-    @GetMapping("/user/{id}")
-    public Statistics getTrainingsPerUser(@PathVariable int id) {
-        List<Training> allTrainings = trainingClient.getTrainings(id);
-        return statisticsService.getStats(allTrainings);
+    @GetMapping("/session")
+    public List<Training> getTrainings(@RequestParam Long id) {
+        return statisticsService.getTrainings(id);
     }
 
-    @GetMapping("/period/user/{id}")
-    public Statistics getTrainingsPerUserAndPeriod(@PathVariable int id, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
-        List<Training> allTrainings = trainingClient.getTrainings(id);
-        return statisticsService.getStatsPerPeriod(allTrainings, startDate, endDate);
+    @GetMapping("/period/stats")
+    public Statistics getTrainingsPerUserAndPeriod(@RequestParam Long id, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        return statisticsService.getStatsPerPeriod(id, startDate, endDate);
+    }
+
+    @GetMapping("/period/session")
+    public List<Training> getTrainingsPerPeriod(@RequestParam Long id, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        return statisticsService.getTrainingsPerPeriod(id, startDate, endDate);
+    }
+
+    @GetMapping("/chart")
+    public Map<String, Long> getChartsPerUser(@RequestParam Long id) {
+        return statisticsService.getCharts(id);
     }
 
     @GetMapping("/users")
-    public HashMap<String, Integer> getUserStatistics (){
-        List<User> allUsers = userClient.getUsers();
-        List<Training> allTrainings = trainingClient.getAllTrainings();
-        return statisticsService.getUserStatistics(allTrainings, allUsers);
+    public Map<String, Integer> getUserStatistics() {
+        return statisticsService.getUserStatistics();
     }
 }
