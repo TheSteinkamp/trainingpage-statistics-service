@@ -9,8 +9,9 @@ import java.util.List;
 
 @FeignClient(name = "training-service")
 public interface TrainingClient {
+
     @GetMapping("/training/user/{id}")
-    List<Training> getTrainings(@PathVariable int id);
+    List<Training> getTrainingsPerUser(@PathVariable Long id);
 
     @GetMapping("/training/all")
     List<Training> getAllTrainings();

@@ -11,8 +11,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Training {
-    private Long id;
+    private long id;
     private LocalDate date;
     private int duration;
     private Long userId;
+    private String type;
 }
+

@@ -10,8 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Statistics {
-
-    private Long userId;
     private int totalTrainings;
     private int totalDuration;
     private double averageDuration;
