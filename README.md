@@ -28,18 +28,6 @@ Statistics-service retrieves data from training-service and user-service through
 | GET | /statistic/users | Fetch the global leaderboard | Yes |
 
 
-### Query Parameters
-
-Most endpoints require an id (User ID) as a query parameter. Period-specific endpoints also require startDate and endDate.
-
-Example: Period Statistics
-
-GET /statistic/period/stats?id=1&startDate=2026-05-01&endDate=2026-05-20
-
-Example: User Chart
-
-GET /statistic/chart?id=1
-
 
 ## Setup
 
